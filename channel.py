@@ -170,7 +170,6 @@ def save_messages(messages):
 
 
 
-
 # filter messages for common names of trees
 # and get botanical name for user input if available
 def valid_message(message):
@@ -187,8 +186,40 @@ def valid_message(message):
         "sweet chestnut": "Castanea sativa",
         "tree hazel": "Corylus colurna",
         "two-handled hawthorn": "Crataegus laevigata",
-        "european beech": "Fagus sylvatica"
-    }
+        "european beech": "Fagus sylvatica",
+        "common ash": "Fraxinus excelsior",
+        "american leatherpod tree": "Gleditsia triacanthos",
+        "walnut": "Juglans regia",
+        "sweetgum tree": "Liquidambar styraciflua",
+        "common plane tree": "Platanus x hispanica",
+        "white poplar": "Populus alba",
+        "pyramidal poplar": "Populus nigra",
+        "aspen": "Populus tremula",
+        "bird cherry": "Prunus avium",
+        "sessile oak": "Quercus petraea",
+        "english oak": "Quercus robur",
+        "red oak": "Quercus rubra",
+        "common acacia": "Robinia pseudoacacia",
+        "white willow": "Salix alba",
+        "sal willow": "Salix caprea",
+        "japanese string tree": "Styphnolobium japonicum",
+        "true whitebeam": "Sorbus aria",
+        "rowanberry": "Sorbus aucuparia",
+        "winter linden tree": "Tilia cordata",
+        "summer linden tree": "Tilia platyphyllos",
+        "silver linden tree": "Tilia tomentosa",
+        "wych elm": "Ulmus glabra",
+        "silver fir": "Abies alba",
+        "colorado fir": "Abies concolor",
+        "atlas cedar": "Cedrus atlantica",
+        "european larch": "Larix decidua",
+        "red spruce": "Picea abies",
+        "blue spruce": "Picea pungens",
+        "black pine": "Pinus nigra",
+        "scots pine": "Pinus sylvestris",
+        "douglas fir": "Pseudotsuga menziesii",
+        "fan leaf tree": "Gingko biloba"}
+
     try:
         botanical_name = botanical_names[message['content'].lower()]
         return botanical_name
