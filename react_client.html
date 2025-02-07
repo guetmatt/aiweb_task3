@@ -17,7 +17,6 @@
         function ChannelList() {
             // React component that shows a channel list
             // content is fetched from the university hub (works only on university network, use VPN)
-            //
             const [channels, setChannels] = React.useState([]);
 
             React.useEffect(() => {
@@ -27,19 +26,31 @@
                     .then(data => setChannels(data.channels));
             }, []);  // empty list here means that this effect will run only once (you can add a variable to run it on change)
 
+
+            const handleClick = (url) => {
+                window.open(url, "_blank");
+            };
+
+            // Displaying clickable channel-names and their types
             return (
                 <div>
                     <h2>Channel List</h2>
                     <ul>
                         {channels.map(channel => (
                             <li key={channel.id}>
-                                {channel.name} (URL: {channel.endpoint}, Type: {channel.type_of_service})
+                                <span
+                                    style={{color: "blue", textDecoration: "underline", cursor: "pointer"}}
+                                    onClick={() => handleClick(channel.endpoint)}>
+                                    {channel.name}
+                                </span>
+                                (Type: {channel.type_of_service})
                             </li>
                         ))}
                     </ul>
                 </div>
             );
         }
+
 
         // main code: render the ChannelList component, add more components here
         ReactDOM.render(

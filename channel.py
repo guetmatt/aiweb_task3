@@ -1,5 +1,4 @@
 ## channel.py - a simple message channel
-##
 
 from flask import Flask, request, render_template, jsonify
 import json
@@ -143,9 +142,9 @@ def send_message():
     return "OK", 200
 
 
-# limit number of messages to 100
+# limit number of messages to 50
 def limit_message_count(messages):
-    while len(messages) > 3:
+    while len(messages) > 50:
         del messages[1]
     return None
 
