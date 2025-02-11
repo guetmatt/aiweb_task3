@@ -1,4 +1,4 @@
-# Start Code for Task 3
+python # Start Code for Task 3
 
 AI & the Web, winter term 2024/2025
 

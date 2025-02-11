@@ -18,38 +18,81 @@
             // React component that shows a channel list
             // content is fetched from the university hub (works only on university network, use VPN)
             const [channels, setChannels] = React.useState([]);
+            
+            
+            // NEW
+            const[mode, setMode] = React.useState("showChannelList");
+            const [selectedChannel, setSelectedChannel] = React.useState(null);
+            //.
 
             React.useEffect(() => {
                 // Fetch list of channels
                 fetch("http://vm146.rz.uos.de/hub/channels") // university hub
-                    .then(response => response.json())
-                    .then(data => setChannels(data.channels));
+                .then(response => response.json())
+                .then(data => setChannels(data.channels));
             }, []);  // empty list here means that this effect will run only once (you can add a variable to run it on change)
 
 
-            const handleClick = (url) => {
-                window.open(url, "_blank");
+            // NEW
+            const handleClick = (channel) => {
+               setSelectedChannel(channel);
+               setMode("showContent"); 
             };
+            //.
+            
+            // NEW
+            const handleBackButton = () => {
+                setSelectedChannel(null);
+                setMode("showChannelList");
+            };
+            //.
 
             // Displaying clickable channel-names and their types
+            // NEW
             return (
                 <div>
-                    <h2>Channel List</h2>
-                    <ul>
-                        {channels.map(channel => (
-                            <li key={channel.id}>
-                                <span
-                                    style={{color: "blue", textDecoration: "underline", cursor: "pointer"}}
-                                    onClick={() => handleClick(channel.endpoint)}>
-                                    {channel.name}
-                                </span>
-                                (Type: {channel.type_of_service})
-                            </li>
-                        ))}
-                    </ul>
+                    {mode === "showChannelList" ? (
+                        <div>  
+                            <h2>Channel List</h2>
+                            <ul>
+                                {channels.map(channel => (
+                                    <li key={channel.id}>
+                                        <span
+                                            style={{color: "blue", textDecoration: "underline", cursor: "pointer"}}
+                                            onClick={() => handleClick(channel)}>
+                                            {channel.name}
+                                        </span>
+                                        (Type: {channel.type_of_service})
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ) : (
+                        <ChannelContent channel={selectedChannel} back={handleBackButton} />
+                    )}
                 </div>
             );
         }
+
+        // NEW
+        function ChannelContent({channel, back}) {
+            const [content, setContent] = React.useState([]);
+
+            React.useEffect(() => {
+                fetch(channel.endpoint)
+                .then(response => response.text())
+                .then(data => setContent(data))
+            }, [channel.endpoint]);
+        
+            return (
+                <div>
+                    <h2>Channel Content (ID: {channel.id})</h2>
+                    <pre>{content}</pre>
+                    <button onClick={() => back()}> Back to List of Channels</button>
+                </div>
+            );
+        }
+        //.
 
 
         // main code: render the ChannelList component, add more components here
