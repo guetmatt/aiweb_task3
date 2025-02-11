@@ -38,20 +38,15 @@ db.create_all()  # create database if necessary
 
 SERVER_AUTHKEY = '1234567890'
 
-
-# The Home page is accessible to anyone
-@app.route('/')
-def home_page():
-    # render home.html template
-    channels = Channel.query.all()
-    return render_template("home.html")
-
-
 def health_check(endpoint, authkey):
     # make GET request to URL
     # add authkey to request header
-    response = requests.get(endpoint+'/health',
-                            headers={'Authorization': 'authkey '+authkey})
+    try:
+        response = requests.get(endpoint+'/health',
+                                headers={'Authorization': 'authkey '+authkey})
+    except requests.exceptions.RequestException as e:
+        print(f"Error: {e}")
+        return False
     if response.status_code != 200:
         return False
     # check if response is JSON with {"name": <channel_name>}
@@ -71,6 +66,28 @@ def health_check(endpoint, authkey):
     channel.last_heartbeat = datetime.datetime.now()
     db.session.commit()  # save to database
     return True
+
+# cli command to check health of all channels
+@app.cli.command('check_channels')
+def check_channels():
+    channels = Channel.query.all()
+    for channel in channels:
+        if not health_check(channel.endpoint, channel.authkey):
+            print(f"Channel {channel.endpoint} is not healthy")
+            channel.active = False
+            db.session.commit()
+        else:
+            print(f"Channel {channel.endpoint} is healthy")
+            channel.active = True
+            db.session.commit()
+
+# The Home page is accessible to anyone
+@app.route('/')
+def home_page():
+    # find all active channels
+    channels = Channel.query.filter_by(active=True).all()
+    # render home.html template
+    return render_template("home.html")
 
 
 # Flask REST route for POST to /channels
