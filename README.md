@@ -1,4 +1,4 @@
-python # Start Code for Task 3
+# Start Code for Task 3
 
 AI & the Web, winter term 2024/2025
 
@@ -18,17 +18,23 @@ AI & the Web, winter term 2024/2025
 
     > flask --app channel.py register
     
-5. Now start the client (new shell of shell from 4.) 
+5. Start the flask client (new shell or shell from 4.) 
 
     > python client.py
 
 6. Open the client, link is displayed after client start (e.g., http://localhost:5005)
 
+7. Start the React client
 
-## Creating your own client
+There is no complete react client (yet), but you can use the react-client.html file as a starting point. Simply open it in your browser locally.
 
-1. Set variables in the client code
+
+## Creating your own flask channel
+
+1. Set variables in the channel code
 2. Modify the code
+
+
 
 # Deploying on the server
 
