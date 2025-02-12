@@ -25,7 +25,7 @@ CHANNEL_AUTHKEY = '0987654321'
 CHANNEL_NAME = "EAC ETW Tree Species"
 
 # CHANNEL_ENDPOINT = "http://localhost:5001" # don't forget to adjust in the bottom of the file
-CHANNEL_ENDPOINT = 'http://vm146.rz.uni-osnabrueck.de/u029/aiweb_task3/channel.wsgi'
+CHANNEL_ENDPOINT = 'http://vm146.rz.uni-osnabrueck.de/u029/channel.wsgi'
 
 CHANNEL_FILE = 'messages.json'
 CHANNEL_TYPE_OF_SERVICE = 'aiweb24:chat'
@@ -70,7 +70,6 @@ def health_check():
 def home_page():
     global CHANNEL_NAME
     if not check_authorization(request):
-        print(request)
         return "Invalid authorization", 400
 
     messages = read_messages()
