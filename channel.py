@@ -55,6 +55,8 @@ def check_authorization(request):
         return False
     # check if authorization header is valid
     if request.headers['Authorization'] != 'authkey ' + CHANNEL_AUTHKEY:
+        # troubleshooting
+        print(request.headers['Authorization'])
         return False
     return True
 
