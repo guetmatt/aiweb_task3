@@ -55,8 +55,6 @@ def check_authorization(request):
         return False
     # check if authorization header is valid
     if request.headers['Authorization'] != 'authkey ' + CHANNEL_AUTHKEY:
-        # troubleshooting
-        print(request.headers['Authorization'])
         return False
     return True
 
@@ -72,6 +70,7 @@ def health_check():
 def home_page():
     global CHANNEL_NAME
     if not check_authorization(request):
+        print(request)
         return "Invalid authorization", 400
 
     messages = read_messages()
