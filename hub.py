@@ -35,8 +35,12 @@ app.app_context().push()  # create an app context before initializing db
 db.init_app(app)  # initialize database
 db.create_all()  # create database if necessary
 
-SERVER_AUTHKEY = '1234567890'
-STANDARD_CLIENT_URL = 'http://localhost:5005' # standard configuration in client.py, chang to real URL if necessary
+# SERVER_AUTHKEY = '1234567890'
+# STANDARD_CLIENT_URL = 'http://localhost:5005' # standard configuration in client.py, chang to real URL if necessary
+
+SERVER_AUTHKEY = 'Crr-K24d-2N'
+STANDARD_CLIENT_URL = 'http://vm146.rz.uni-osnabrueck.de/u029/aiweb_task3/channel.wsgi'
+
 
 def health_check(endpoint, authkey):
     # make GET request to URL
