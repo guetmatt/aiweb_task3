@@ -19,11 +19,9 @@
             // content is fetched from the university hub (works only on university network, use VPN)
             const [channels, setChannels] = React.useState([]);
             
-            
-            // NEW
+            // constants for channel-selection and mode
             const[mode, setMode] = React.useState("showChannelList");
-            const [selectedChannel, setSelectedChannel] = React.useState(null);
-            //.
+            const[selectedChannel, setSelectedChannel] = React.useState(null);
 
             React.useEffect(() => {
                 // Fetch list of channels
@@ -33,22 +31,20 @@
             }, []);  // empty list here means that this effect will run only once (you can add a variable to run it on change)
 
 
-            // NEW
+            // click-function to show content of a channel
             const handleClick = (channel) => {
                setSelectedChannel(channel);
                setMode("showContent"); 
             };
-            //.
             
-            // NEW
+            // function go back to list of channels
             const handleBackButton = () => {
                 setSelectedChannel(null);
                 setMode("showChannelList");
             };
-            //.
 
             // Displaying clickable channel-names and their types
-            // NEW
+            // after checking for correct mode
             return (
                 <div>
                     {mode === "showChannelList" ? (
@@ -74,25 +70,32 @@
             );
         }
 
-        // NEW
+        // function to show content of a channel
         function ChannelContent({channel, back}) {
-            const [content, setContent] = React.useState([]);
-
+            const[content, setContent] = React.useState([]);
+            
+            // get content from channel-endpoint
             React.useEffect(() => {
                 fetch(channel.endpoint)
                 .then(response => response.text())
                 .then(data => setContent(data))
             }, [channel.endpoint]);
-        
+            
+            // display content of channel
+            // includes a back-button to list of channels
             return (
                 <div>
-                    <h2>Channel Content (ID: {channel.id})</h2>
-                    <pre>{content}</pre>
-                    <button onClick={() => back()}> Back to List of Channels</button>
+                    {mode === "showContent" ? (
+                    <div>
+                        <h2>Channel Content (ID: {channel.id})</h2>
+                        <pre>{content}</pre>
+                        <button onClick={() => back()}> Back to List of Channels</button>
+                    </div>
+                    ) : ( <ChannelList />
+                    )}
                 </div>
             );
         }
-        //.
 
 
         // main code: render the ChannelList component, add more components here
