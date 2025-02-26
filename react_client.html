@@ -85,14 +85,9 @@
             // includes a back-button to list of channels
             return (
                 <div>
-                    {mode === "showContent" ? (
-                    <div>
-                        <h2>Channel Content (ID: {channel.id})</h2>
-                        <pre>{content}</pre>
-                        <button onClick={() => back()}> Back to List of Channels</button>
-                    </div>
-                    ) : ( <ChannelList />
-                    )}
+                    <h2>Channel Content (ID: {channel.id})</h2>
+                    <pre>{content}</pre>
+                    <button onClick={() => back()}> Back to List of Channels</button>
                 </div>
             );
         }
